@@ -1,0 +1,24 @@
+<ion-view view-title="Settings">
+    <ion-content>
+        <div class="row">
+            <div class="col">
+                <input type="text" ng-model="baseUrl" class="button-full" placeholder="{{baseUrl}}"></input>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <button class="button button-balanced button-full" ng-click="updateBase()">Update</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <pre>{{oauthSuccess}}</pre>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <pre>{{oauthError}}</pre>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

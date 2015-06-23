@@ -1,0 +1,16 @@
+<ion-view view-title="Patients">
+    <ion-content>
+        <ion-list>
+            <ion-item ng-repeat="(patientIndex, patient) in patients track by $index">
+                <button class="button button-stable button-full token" ng-click="goMeds(patientIndex)">
+                    {{patient.resource.name[0].given[0]}} {{patient.resource.name[0].family[0]}}
+                </button>
+            </ion-item>
+        </ion-list>
+        <div class="row">
+            <div class="col">
+                <pre>{{patients}}</pre>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,14 @@
+<ion-view view-title="Medications">
+    <ion-content>
+        <ion-list>
+            <ion-item ng-repeat="(medIndex, med) in medications track by $index">
+                {{med.resource.medication.display}} - {{med.resource.status}}
+            </ion-item>
+        </ion-list>
+        <div class="row">
+            <div class="col">
+                <pre>{{medications[0]}}</pre>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
