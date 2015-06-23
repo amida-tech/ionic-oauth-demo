@@ -13,7 +13,7 @@ angular.module('starter.services', [])
         this.getTokens = getTokens;
 
         function getBase(callback) {
-            var baseUrl = $localstorage.get('baseUrl', 'http://192.168.0.118:3000');
+            var baseUrl = $localstorage.get('baseUrl', 'http://192.168.0.118:3000/');
             console.log(baseUrl);
             callback(baseUrl);
         }
