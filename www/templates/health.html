@@ -1,0 +1,18 @@
+<ion-view view-title="HealthKit">
+    <ion-content>
+        <ion-list>
+            <ion-item>
+                {{healthKitAvailable}}
+            </ion-item>
+            <ion-item ng-show="userSteps">
+                Step Count: {{userSteps}}
+            </ion-item>
+            <ion-item ng-show="userWeight">
+                Weight: {{userWeight}} lbs
+            </ion-item>
+            <ion-item ng-show="userHeight">
+                Height: {{userHeight}} ft
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

@@ -1,31 +1,24 @@
-<ion-view view-title="Tokens">
+<ion-view view-title="Patients">
     <ion-content>
         <ion-list ng-if="tokens.length > 0">
             <ion-item ng-repeat="(tokenIndex, token) in tokens track by $index">
-                <button class="button button-stable button-full token" ng-click="goPatient(tokenIndex)">
-                    {{token.access_token}}
-                </button>
+                <div class="row">
+                    <button class="button button-default col-50 token" ng-click="goMeds(tokenIndex)">
+                        {{token.patients[0].resource.name[0].given[0]}} {{token.patients[0].resource.name[0].given[0]}}
+                    </button>
+                    <div class="col-25">
+
+                    </div>
+                    <div class="col-25">
+                        <button class="button button-royal" ng-click="goPatient(tokenIndex)">
+                            INFO
+                        </button>
+                    </div>
+                </div>
             </ion-item>
         </ion-list>
         <div class="row">
-            <div class="col">
-                <button class="button button-balanced button-full" ng-click="getToken()">Get a Token</button>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <pre>{{oauthSuccess}}</pre>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <pre>{{oauthError}}</pre>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <pre>{{tokens}}</pre>
-            </div>
+            <button class="button button-balanced col" ng-click="getToken()">Add a User (DRE)</button>
         </div>
     </ion-content>
 </ion-view>

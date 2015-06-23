@@ -1,6 +1,6 @@
 // Ionic Starter App
 
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ionic.utils', 'ngCordovaOauth'])
+angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter.services', 'ionic.utils', 'ngCordovaOauth'])
 
     .run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {
@@ -24,6 +24,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
                 abstract: true,
                 templateUrl: "templates/menu.html",
                 controller: 'AppCtrl'
+            })
+
+            .state('app.health', {
+                url: "/health",
+                cache: false,
+                views: {
+                    'menuContent': {
+                        templateUrl: "templates/health.html",
+                        controller: 'HealthCtrl'
+                    }
+                }
             })
 
             .state('app.settings', {

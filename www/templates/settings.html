@@ -1,14 +1,27 @@
 <ion-view view-title="Settings">
     <ion-content>
-        <div class="row">
-            <div class="col">
-                <input type="text" ng-model="baseUrl" class="button-full" placeholder="{{baseUrl}}"/>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <button class="button button-balanced button-full" ng-click="updateBase(baseUrl)">Update</button>
-            </div>
-        </div>
+        <ion-list>
+            <ion-item class="item-text-wrap">
+                <div class="row">
+                    <div class="col">
+                        Below is the IP address of your DRE Server. It should be in the format http://localhost:3000/
+                    </div>
+                </div>
+                <label class="item item-input">
+                    <span class="input-label">DRE:</span>
+                    <input type="text" placeholder="{{baseUrl}}" ng-model="baseUrl">
+                </label>
+            </ion-item>
+            <ion-item>
+                <div class="row">
+                    <button class="button button-balanced col" ng-click="updateBase(baseUrl)">Update</button>
+                </div>
+            </ion-item>
+            <ion-item>
+                <div class="row">
+                    <button class="button button-assertive col" ng-click="clearTokens()">Clear All Tokens</button>
+                </div>
+            </ion-item>
+        </ion-list>
     </ion-content>
 </ion-view>

@@ -33,6 +33,13 @@ angular.module('starter.services', [])
 
         this.setTokens = setTokens;
 
+        function clearTokens() {
+            var userTokens = {tokens: []};
+            $localstorage.setObject('userTokens', userTokens)
+        }
+
+        this.clearTokens = clearTokens;
+
         function getCredentials(callback) {
             getBase(function (baseUrl) {
                 c = {
@@ -60,7 +67,6 @@ angular.module('starter.services', [])
                 callback(c);
             })
         }
-
         this.getCredentials = getCredentials;
 
         function getPatients(c, token, callback) {

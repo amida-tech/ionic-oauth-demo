@@ -1,16 +1,33 @@
-<ion-view view-title="Patients">
+<ion-view view-title="Token Info">
     <ion-content>
         <ion-list>
+            <ion-item ng-if="patients.length === 1">
+                One Patient:
+            </ion-item>
+            <ion-item ng-if="patients.length > 1">
+                {{patients.length}} Patients:
+            </ion-item>
             <ion-item ng-repeat="(patientIndex, patient) in patients track by $index">
-                <button class="button button-stable button-full token" ng-click="goMeds(patientIndex)">
-                    {{patient.resource.name[0].given[0]}} {{patient.resource.name[0].family[0]}}
-                </button>
+                <div class="row">
+                    <div class="col-25">
+                        Name:
+                    </div>
+                    <button class="button button-stable col-75 token" ng-click="goMeds(patientIndex)">
+                        {{patient.resource.name[0].given[0]}} {{patient.resource.name[0].family[0]}}
+                    </button>
+                </div>
+            </ion-item>
+            <ion-item>
+                Token: {{token.access_token}}
+            </ion-item>
+            <ion-item>
+                Expires: {{token.expires_in}}
+            </ion-item>
+            <ion-item>
+                <pre>
+                    {{token}}
+                </pre>
             </ion-item>
         </ion-list>
-        <div class="row">
-            <div class="col">
-                <pre>{{patients}}</pre>
-            </div>
-        </div>
     </ion-content>
 </ion-view>
