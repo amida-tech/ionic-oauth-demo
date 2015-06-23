@@ -1,10 +1,8 @@
 ## About
-=============
 
 Ionic OAuth Demo is a test platform from Amida Technology Solutions.  It acts as an OAuth Client connecting the the Data Reconciliation Engine and also serves as a test bed for possible future integrations (example: HealthKit)
 
 ### Installation
-==================
 
 In order to get started, cordova and ionic need to be installed.  Do this by running:
 
