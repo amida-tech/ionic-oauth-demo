@@ -10,8 +10,9 @@ angular.module('starter.controllers', [])
             $scope.baseUrl = baseUrl;
         });
 
-        $scope.updateBase = function () {
-            TokenService.setBase($scope.baseUrl);
+        $scope.updateBase = function (newBase) {
+            console.log("controller baseUrl: ");
+            TokenService.setBase(newBase);
         }
     }])
 

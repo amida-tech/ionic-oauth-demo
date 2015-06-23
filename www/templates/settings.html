@@ -2,22 +2,12 @@
     <ion-content>
         <div class="row">
             <div class="col">
-                <input type="text" ng-model="baseUrl" class="button-full" placeholder="{{baseUrl}}"></input>
+                <input type="text" ng-model="baseUrl" class="button-full" placeholder="{{baseUrl}}"/>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <button class="button button-balanced button-full" ng-click="updateBase()">Update</button>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <pre>{{oauthSuccess}}</pre>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <pre>{{oauthError}}</pre>
+                <button class="button button-balanced button-full" ng-click="updateBase(baseUrl)">Update</button>
             </div>
         </div>
     </ion-content>
