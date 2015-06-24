@@ -6,7 +6,17 @@ Ionic OAuth Demo is a test platform from Amida Technology Solutions.  It acts as
 
 In order to get started, cordova and ionic need to be installed.  Do this by running:
 
-``` npm install -g cordova ionic ```
+```
+npm install -g cordova ionic
+
+npm install
+
+cordova plugin add cordova-plugin-inappbrowser --save
+
+cordova plugin add https://github.com/Telerik-Verified-Plugins/HealthKit --save
+
+bower install
+```
 
 In order to emulate for iOS you will need to have XCode Installed and be using a Mac.
 
