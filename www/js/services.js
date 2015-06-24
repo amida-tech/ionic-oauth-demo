@@ -14,7 +14,6 @@ angular.module('starter.services', [])
 
         function getBase(callback) {
             var baseUrl = $localstorage.get('baseUrl', 'http://192.168.0.118:3000/');
-            console.log(baseUrl);
             callback(baseUrl);
         }
 
