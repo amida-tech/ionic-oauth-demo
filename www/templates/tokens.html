@@ -1,9 +1,25 @@
-<ion-view view-title="Patients">
+<ion-view view-title="Settings">
     <ion-content>
-        <ion-list ng-if="tokens.length > 0">
-            <ion-item ng-repeat="(tokenIndex, token) in tokens track by $index">
+        <ion-list>
+            <ion-item ng-hide="tokenExists">
                 <div class="row">
-                    <button class="button button-default col-75 token" ng-click="goMeds(tokenIndex)">
+                    <button class="button button-default col-50 token" ng-click="getToken()">
+                        <!--<i class="icon ion-android-person"></i>-->
+                        DRE&nbsp;&nbsp;<i class="icon ion-chevron-right" style="float: right;"></i>
+                    </button>
+                    <!--                    <div class="col-25">
+
+                                        </div>-->
+                    <div class="col-50">
+                        <button class="button infoButton" ng-click="getToken()">
+                            Connect
+                        </button>
+                    </div>
+                </div>
+            </ion-item>
+            <ion-item ng-show="tokenExists">
+                <div class="row">
+                    <button class="button button-default col-75 token" ng-click="goMeds()">
                     <!--<i class="icon ion-android-person"></i>-->
                         {{token.patients[0].resource.name[0].given[0]}} {{token.patients[0].resource.name[0].given[0]}}&nbsp;&nbsp;<i class="icon ion-chevron-right" style="float: right;"></i>
                     </button>
@@ -11,7 +27,7 @@
 
                     </div>-->
                     <div class="col-25">
-                        <button class="button infoButton" ng-click="goPatient(tokenIndex)">
+                        <button class="button infoButton" ng-click="goPatient()">
                             INFO
                         </button>
                     </div>
@@ -19,8 +35,11 @@
             </ion-item>
         </ion-list>
     </ion-content>
-<div id="newUser">
+    <div id="newUser" ng-hide="tokenExists">
     <button class="button button-balanced col" ng-click="getToken()">Add a User (DRE)</button>
 </div>
+    <div id="newUser" ng-show="tokenExists">
+        <button class="button button-assertive col" ng-click="clearTokens()">Remove User</button>
+    </div>
 
 </ion-view>

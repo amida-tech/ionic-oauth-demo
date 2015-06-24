@@ -43,7 +43,18 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
                 views: {
                     'menuContent': {
                         templateUrl: "templates/settings.html",
-                        controller: 'SettingCtrl'
+                        controller: 'SettingsCtrl'
+                    }
+                }
+            })
+
+            .state('app.dev', {
+                url: "/dev",
+                cache: false,
+                views: {
+                    'menuContent': {
+                        templateUrl: "templates/dev.html",
+                        controller: 'DevCtrl'
                     }
                 }
             })
@@ -72,14 +83,15 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
 
             .state('app.medications', {
                 cache: false,
+                url: '/medications',
                 views: {
                     'menuContent': {
                         templateUrl: "templates/medications.html",
                         controller: 'MedicationCtrl'
                     }
-                },
-                params: {token: null, patient: null}
+                }//,
+//                params: {token: null, patient: null}
             });
         // if none of the above states are matched, use this as the fallback
-        $urlRouterProvider.otherwise('/app/tokens');
+        $urlRouterProvider.otherwise('/app/medications');
     });

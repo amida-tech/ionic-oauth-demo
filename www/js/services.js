@@ -12,6 +12,18 @@ angular.module('starter.services', [])
 
         this.getTokens = getTokens;
 
+        function getToken(callback) {
+            callback($localstorage.getObject('userToken'));
+        }
+
+        this.getToken = getToken;
+
+        function setToken(token) {
+            $localstorage.setObject('userToken', token);
+        }
+
+        this.setToken = setToken;
+
         function getBase(callback) {
             var baseUrl = $localstorage.get('baseUrl', 'http://192.168.0.118:3000/');
             callback(baseUrl);
@@ -34,10 +46,22 @@ angular.module('starter.services', [])
 
         function clearTokens() {
             var userTokens = {tokens: []};
-            $localstorage.setObject('userTokens', userTokens)
+            $localstorage.setObject('userTokens', userTokens);
+            $localstorage.setObject('userToken', {});
         }
 
         this.clearTokens = clearTokens;
+
+        function tokenExists() {
+            var token = $localstorage.getObject('userToken', {});
+            if (Object.keys(token).length === 0) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        this.tokenExists = tokenExists;
 
         function getCredentials(callback) {
             getBase(function (baseUrl) {
@@ -105,4 +129,27 @@ angular.module('starter.services', [])
         }
 
         this.getMedications = getMedications;
+
+        function getUserMedications(callback) {
+            getToken(function (token) {
+                getCredentials(function (c) {
+                    $http({
+                        method: "get",
+                        url: c.credentials.api_url + '/MedicationPrescription?patient=' + token.patients[0].resource.id,
+                        headers: {
+                            Authorization: 'Bearer ' + token.access_token,
+                            Accept: 'application/json'
+                        }
+                    })
+                        .success(function (data) {
+                            callback(data);
+                        })
+                        .error(function (data, status) {
+                            callback(status);
+                        })
+                });
+            });
+        }
+
+        this.getUserMedications = getUserMedications;
     }]);

@@ -60,7 +60,7 @@ angular.module('starter.controllers', [])
         }
     }])
 
-    .controller('SettingCtrl', ['$scope', 'TokenService', function ($scope, TokenService) {
+    .controller('DevCtrl', ['$scope', 'TokenService', function ($scope, TokenService) {
         $scope.base = {url: 'http://localhost:3000/'};
         TokenService.getBase(function (baseUrl) {
             $scope.base.url = baseUrl;
@@ -76,13 +76,24 @@ angular.module('starter.controllers', [])
         }
     }])
 
-    .controller('TokenCtrl', ['$scope', '$state', '$cordovaOauth', 'TokenService', function ($scope, $state, $cordovaOauth, TokenService) {
+    .controller('TokenCtrl', ['$scope', '$state', '$cordovaOauth', '$ionicHistory', 'TokenService', function ($scope, $state, $cordovaOauth, $ionicHistory, TokenService) {
+        $ionicHistory.nextViewOptions({
+            disableBack: true
+        });
         var isWeb = ionic.Platform.isWebView();
 
+        /*
         $scope.tokens = [];
         TokenService.getTokens(function (tokens) {
             $scope.tokens = tokens;
         });
+         */
+        $scope.token = {};
+        TokenService.getToken(function (token) {
+            $scope.token = token;
+        });
+
+        $scope.tokenExists = TokenService.tokenExists();
 
         var c = {};
         TokenService.getCredentials(function (credentials) {
@@ -94,26 +105,31 @@ angular.module('starter.controllers', [])
                 $scope.oauthSuccess = "success " + JSON.stringify(result);
                 TokenService.getPatients(c, result, function (response) {
                     result.patients = response.entry;
-                    $scope.tokens.push(result);
-                    TokenService.setTokens($scope.tokens);
+                    //$scope.tokens.push(result);
+                    $scope.token = result;
+                    TokenService.setToken(result);
+                    $scope.tokenExists = true;
+                    //TokenService.setTokens($scope.tokens);
                 });
             }, function (error) {
                 console.log("error: " + error);
                 $scope.oauthError = "error " + error;
             });
-        }
+        };
 
-        $scope.goPatient = function (tokenIndex) {
+        $scope.goPatient = function () {
             $state.go('app.patients', {
-                token: $scope.tokens[tokenIndex]
+                token: $scope.token
             });
-        }
+        };
 
-        $scope.goMeds = function (tokenIndex) {
-            $state.go('app.medications', {
-                token: $scope.tokens[tokenIndex],
-                patient: $scope.tokens[tokenIndex].patients[0].resource.id
-            })
+        $scope.goMeds = function () {
+            $state.go('app.medications');
+        };
+
+        $scope.clearTokens = function () {
+            TokenService.clearTokens();
+            $scope.tokenExists = false;
         }
     }])
 
@@ -131,19 +147,23 @@ angular.module('starter.controllers', [])
         });
 
         $scope.goMeds = function (patientIndex) {
-            $state.go('app.medications', {
-                token: token,
-                patient: $scope.patients[patientIndex].resource.id
-            })
+            $state.go('app.medications');
         }
     }])
 
-    .controller('MedicationCtrl', ['$scope', '$stateParams', 'TokenService', function ($scope, $stateParams, TokenService) {
-        var token = $stateParams.token;
-        var patient = $stateParams.patient;
-        TokenService.getCredentials(function (credentials) {
-            c = credentials;
-            TokenService.getMedications(c, token, patient, function (response) {
+    .controller('MedicationCtrl', ['$scope', '$state', '$ionicHistory', 'TokenService', function ($scope, $state, $ionicHistory, TokenService) {
+        $ionicHistory.nextViewOptions({
+            disableBack: true
+        });
+        //var token = $stateParams.token;
+        //var patient = $stateParams.patient;
+        //TokenService.getCredentials(function (credentials) {
+//            c = credentials;
+        //TokenService.getMedications(c, token, patient, function (response) {
+        $scope.tokenExists = TokenService.tokenExists();
+
+        if ($scope.tokenExists) {
+            TokenService.getUserMedications(function (response) {
                 var meds = response.entry;
                 var medPush = [];
                 for (var i = 0; i <= meds.length; i++) {
@@ -156,7 +176,11 @@ angular.module('starter.controllers', [])
                         }
                     }
                 }
-                //$scope.medications = response.entry;
             });
-        });
+        }
+//        });
+
+        $scope.getToken = function () {
+            $state.go('app.tokens');
+        }
     }]);

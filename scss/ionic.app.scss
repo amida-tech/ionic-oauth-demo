@@ -20,13 +20,3 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
-
-.button-full {
-  width: 100%;
-}
-
-.token {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}

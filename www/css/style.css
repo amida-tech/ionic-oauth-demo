@@ -1,4 +1,3 @@
-/* Empty. Add your own CSS if you like */
 @import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
 body {
 	font-family: Lato !important;
@@ -12,14 +11,14 @@ button.button {
 }
 /* PATIENT PAGE UPDATES */
 #newUser {
-bottom: 0;
-position: fixed;
-width: 100%;
-border-radius: 0;
+	bottom: 0;
+	position: fixed;
+	width: 100%;
+	border-radius: 0;
 }
 ion-item:last-of-type {
 	margin-bottom: 46px;
-	border-bottom-width: 0;	
+	border-bottom-width: 0;
 }
 #newUser .button.button-balanced {
 	border-radius: 0;
@@ -76,7 +75,7 @@ ion-item:last-of-type {
 	content: "";
 }
 .menu-left .bar.bar-stable h1 {
-	visibility: hidden; 
+	visibility: hidden;
 	/* HIDE TO MAINTAIN aria COMPATABILITY. NO DISPLAY NONE */
 }
 /* END OF OVERWRITES DRAWER HEADER W/ LOGO */
