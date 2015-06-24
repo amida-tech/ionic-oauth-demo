@@ -61,13 +61,13 @@ angular.module('starter.controllers', [])
     }])
 
     .controller('SettingCtrl', ['$scope', 'TokenService', function ($scope, TokenService) {
-        $scope.baseUrl = 'http://localhost:3000/';
+        $scope.base = {url: 'http://localhost:3000/'};
         TokenService.getBase(function (baseUrl) {
-            $scope.baseUrl = baseUrl;
+            $scope.base.url = baseUrl;
         });
 
         $scope.updateBase = function (newBase) {
-            console.log("controller baseUrl: ");
+            console.log("controller baseUrl: " + newBase);
             TokenService.setBase(newBase);
         }
 
