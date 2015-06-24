@@ -3,22 +3,24 @@
         <ion-list ng-if="tokens.length > 0">
             <ion-item ng-repeat="(tokenIndex, token) in tokens track by $index">
                 <div class="row">
-                    <button class="button button-default col-50 token" ng-click="goMeds(tokenIndex)">
-                        {{token.patients[0].resource.name[0].given[0]}} {{token.patients[0].resource.name[0].given[0]}}
+                    <button class="button button-default col-75 token" ng-click="goMeds(tokenIndex)">
+                    <!--<i class="icon ion-android-person"></i>-->
+                        {{token.patients[0].resource.name[0].given[0]}} {{token.patients[0].resource.name[0].given[0]}}&nbsp;&nbsp;<i class="icon ion-chevron-right" style="float: right;"></i>
                     </button>
-                    <div class="col-25">
+<!--                    <div class="col-25">
 
-                    </div>
+                    </div>-->
                     <div class="col-25">
-                        <button class="button button-royal" ng-click="goPatient(tokenIndex)">
+                        <button class="button infoButton" ng-click="goPatient(tokenIndex)">
                             INFO
                         </button>
                     </div>
                 </div>
             </ion-item>
         </ion-list>
-        <div class="row">
-            <button class="button button-balanced col" ng-click="getToken()">Add a User (DRE)</button>
-        </div>
     </ion-content>
+<div id="newUser">
+    <button class="button button-balanced col" ng-click="getToken()">Add a User (DRE)</button>
+</div>
+
 </ion-view>

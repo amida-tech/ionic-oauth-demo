@@ -1,1 +1,82 @@
 /* Empty. Add your own CSS if you like */
+@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
+body {
+	font-family: Lato !important;
+}
+/* BUTTON UPDATES */
+button.button {
+	text-transform: uppercase;
+	font-family: Lato;
+	font-weight:  700;
+	padding: 0;
+}
+/* PATIENT PAGE UPDATES */
+#newUser {
+bottom: 0;
+position: fixed;
+width: 100%;
+border-radius: 0;
+}
+ion-item:last-of-type {
+	margin-bottom: 46px;
+	border-bottom-width: 0;	
+}
+#newUser .button.button-balanced {
+	border-radius: 0;
+	border-left-width: 0px;
+	border-right-width: 0px;
+	border-bottom-width: 0px;
+}
+.row {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+.row .button.button-default {
+	text-align: left;
+	background-color: transparent;
+	border: none;
+}
+.row .button.activated {
+	box-shadow: none;
+}
+.row .button.token i {
+	color: #aaa;
+}
+.row .button.infoButton {
+	float: right;
+	background-color: transparent;
+	border-color: transparent;
+	color: #aaa;
+	border-left: 1px solid #ddd;
+	border-radius: 0;
+	padding-left: 15px;
+}
+/* COLORS MAIN TOOLBAR */
+.bar.bar-stable {
+	font-family: Lato;
+	background-color: #649fd1;
+	border-color: #3c87c5;
+}
+.bar.bar-stable .title, .bar-stable .button.button-clear, .menu-left .bar.bar-stable h1.title {
+	color: #fff;
+	font-weight: 700;
+}
+/* END OF COLORS MAIN TOOLBAR */
+/* COLORS DRAWER */
+.menu-left .bar.bar-stable,  .menu-left, .menu-left .list .item.item-complex, .menu-left .list .item.item-complex .item-content {
+	background-color: #4d4d51;
+	color: #fff;
+	border-color: #5a5a5a;
+}
+/* END OF COLORS DRAWER */
+/* OVERWRITES DRAWER HEADER W/ LOGO; Adjust ypos from a baseline of h1.title's ypos. */
+.menu-left .bar.bar-stable {
+	background: url(../img/Amida-Logo-White.svg) center 0px no-repeat;
+	background-size: 90px 70px;
+	content: "";
+}
+.menu-left .bar.bar-stable h1 {
+	visibility: hidden; 
+	/* HIDE TO MAINTAIN aria COMPATABILITY. NO DISPLAY NONE */
+}
+/* END OF OVERWRITES DRAWER HEADER W/ LOGO */
