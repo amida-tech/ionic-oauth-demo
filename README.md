@@ -11,12 +11,37 @@ npm install -g cordova ionic
 
 npm install
 
-cordova plugin add cordova-plugin-inappbrowser --save
+```
 
-cordova plugin add https://github.com/Telerik-Verified-Plugins/HealthKit --save
+Add the devices you want:
+
+```
+
+ionic platform add ios
+
+ionic platform add android
+
+```
+
+And then...
+
+```
 
 bower install
+
 ```
+
+Finally, if you're using iOS... go and modify your IonicApp-Info.plist file located at `platforms/ios/IonicApp/IonicApp-Info.plist` and add this to it:
+
+```
+<key>NSAppTransportSecurity</key>
+    <dict>
+      <key>NSAllowsArbitraryLoads</key>
+      <true/>
+    </dict>
+```
+
+DRE is currently setup for http NOT https... iOS doesn't like that (for good reason).  Currently a workaround until DRE adds https.
 
 In order to emulate for iOS you will need to have XCode Installed and be using a Mac.
 
