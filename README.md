@@ -10,28 +10,23 @@ In order to get started, cordova and ionic need to be installed.  Do this by run
 npm install -g cordova ionic
 
 npm install
-
 ```
 
 Add the devices you want:
 
 ```
-
 ionic platform add ios
 
 ionic platform add android
-
 ```
 
 And then...
 
 ```
-
 bower install
-
 ```
 
-Finally, if you're using iOS... go and modify your IonicApp-Info.plist file located at `platforms/ios/IonicApp/IonicApp-Info.plist` and add this to it:
+If you're using iOS... go and modify your IonicApp-Info.plist file located at `platforms/ios/IonicApp/IonicApp-Info.plist` and add this to it:
 
 ```
 <key>NSAppTransportSecurity</key>
@@ -40,6 +35,21 @@ Finally, if you're using iOS... go and modify your IonicApp-Info.plist file loca
       <true/>
     </dict>
 ```
+
+and add this file `platforms/ios/IonicApp/IonicApp.entitlements` :
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>com.apple.developer.healthkit</key>
+	<true/>
+</dict>
+</plist>
+```
+
+which enables HealthKit
 
 DRE is currently setup for http NOT https... iOS doesn't like that (for good reason).  Currently a workaround until DRE adds https.
 
