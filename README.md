@@ -31,6 +31,18 @@ bower install
 
 ```
 
+Finally, if you're using iOS... go and modify your IonicApp-Info.plist file located at `platforms/ios/IonicApp/IonicApp-Info.plist` and add this to it:
+
+```
+<key>NSAppTransportSecurity</key>
+    <dict>
+      <key>NSAllowsArbitraryLoads</key>
+      <true/>
+    </dict>
+```
+
+DRE is currently setup for http NOT https... iOS doesn't like that (for good reason).  Currently a workaround until DRE adds https.
+
 In order to emulate for iOS you will need to have XCode Installed and be using a Mac.
 
 Emulate iOS: `ionic emulate ios`
