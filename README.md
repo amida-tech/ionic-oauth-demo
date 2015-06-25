@@ -26,7 +26,10 @@ And then...
 bower install
 ```
 
-If you're using iOS... go and modify your IonicApp-Info.plist file located at `platforms/ios/IonicApp/IonicApp-Info.plist` and add this to it:
+
+#### iOS
+
+DRE is currently setup for http NOT https... iOS doesn't like that (for good reason).  Currently a workaround until DRE adds https is to... go and modify your IonicApp-Info.plist file located at `platforms/ios/IonicApp/IonicApp-Info.plist` and add this to it:
 
 ```
 <key>NSAppTransportSecurity</key>
@@ -36,7 +39,7 @@ If you're using iOS... go and modify your IonicApp-Info.plist file located at `p
     </dict>
 ```
 
-and add this file `platforms/ios/IonicApp/IonicApp.entitlements` :
+For HealthKit, add this file `platforms/ios/IonicApp/IonicApp.entitlements` :
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
@@ -49,9 +52,7 @@ and add this file `platforms/ios/IonicApp/IonicApp.entitlements` :
 </plist>
 ```
 
-which enables HealthKit
-
-DRE is currently setup for http NOT https... iOS doesn't like that (for good reason).  Currently a workaround until DRE adds https.
+### Emulating
 
 In order to emulate for iOS you will need to have XCode Installed and be using a Mac.
 
