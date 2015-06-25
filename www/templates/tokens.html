@@ -5,7 +5,7 @@
                 <div class="row">
                     <button class="button button-default col-50 token" ng-click="getToken()">
                         <!--<i class="icon ion-android-person"></i>-->
-                        DRE&nbsp;&nbsp;<i class="icon ion-chevron-right" style="float: right;"></i>
+                        [DRE]&nbsp;&nbsp;<i class="icon ion-chevron-right" style="float: right;"></i>
                     </button>
                     <!--                    <div class="col-25">
 
@@ -21,7 +21,9 @@
                 <div class="row">
                     <button class="button button-default col-75 token" ng-click="goMeds()">
                     <!--<i class="icon ion-android-person"></i>-->
-                        {{token.patients[0].resource.name[0].given[0]}} {{token.patients[0].resource.name[0].given[0]}}&nbsp;&nbsp;<i class="icon ion-chevron-right" style="float: right;"></i>
+                        [DRE] {{token.patients[0].resource.name[0].given[0]}}
+                        {{token.patients[0].resource.name[0].family[0]}}&nbsp;&nbsp;<i class="icon ion-chevron-right"
+                                                                                       style="float: right;"></i>
                     </button>
 <!--                    <div class="col-25">
 
