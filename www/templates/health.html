@@ -8,10 +8,10 @@
                 Step Count: {{userSteps}}
             </ion-item>
             <ion-item ng-show="userWeight">
-                Weight: {{userWeight}} lbs
+                Weight: {{userWeight | number:1}} lbs
             </ion-item>
             <ion-item ng-show="userHeight">
-                Height: {{userHeight}} ft
+                Height: {{userHeight | number:1}} ft
             </ion-item>
         </ion-list>
     </ion-content>

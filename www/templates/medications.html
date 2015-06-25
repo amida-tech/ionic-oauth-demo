@@ -5,14 +5,14 @@
                 No Accounts Connected
             </ion-item>
             <ion-item ng-repeat="(medIndex, med) in medications track by $index" ng-show="tokenExists">
-                {{med.resource.medication.display}} - {{med.resource.status}}
+                {{med.resource.medication.display}}<!-- - {{med.resource.status}}-->
             </ion-item>
         </ion-list>
-        <div class="row" ng-show="tokenExists">
+        <!--<div class="row" ng-show="tokenExists">
             <div class="col">
                 <pre>{{medications}}</pre>
             </div>
-        </div>
+        </div>-->
     </ion-content>
     <div id="newUser" ng-hide="tokenExists">
         <button class="button button-balanced col" ng-click="getToken()">Add a User (DRE)</button>
