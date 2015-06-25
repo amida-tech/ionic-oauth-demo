@@ -11,11 +11,24 @@ npm install -g cordova ionic
 
 npm install
 
-cordova plugin add cordova-plugin-inappbrowser --save
+```
 
-cordova plugin add https://github.com/Telerik-Verified-Plugins/HealthKit --save
+Add the devices you want:
+
+```
+
+ionic platform add ios
+
+ionic platform add android
+
+```
+
+And then...
+
+```
 
 bower install
+
 ```
 
 In order to emulate for iOS you will need to have XCode Installed and be using a Mac.
