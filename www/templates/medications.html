@@ -2,7 +2,7 @@
     <ion-content>
         <ion-list>
             <ion-item ng-hide="tokenExists">
-                No health records connected. Please connect to the DRE.
+                No health records connected.
             </ion-item>
             <ion-item ng-repeat="(medIndex, med) in medications track by $index" ng-show="tokenExists">
                 {{med.resource.medication.display}}<!-- - {{med.resource.status}}-->
