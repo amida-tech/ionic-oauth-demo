@@ -37,17 +37,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
                 }
             })
 
-            .state('app.settings', {
-                url: "/settings",
-                cache: false,
-                views: {
-                    'menuContent': {
-                        templateUrl: "templates/settings.html",
-                        controller: 'SettingsCtrl'
-                    }
-                }
-            })
-
             .state('app.dev', {
                 url: "/dev",
                 cache: false,
@@ -59,23 +48,23 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
                 }
             })
 
-            .state('app.tokens', {
-                url: "/tokens",
+            .state('app.settings', {
+                url: "/settings",
                 cache: false,
                 views: {
                     'menuContent': {
-                        templateUrl: "templates/tokens.html",
-                        controller: 'TokenCtrl'
+                        templateUrl: "templates/settings.html",
+                        controller: 'SettingsCtrl'
                     }
                 }
             })
-            .state('app.patients', {
+            .state('app.info', {
                 cache: false,
-                url: '/patients',
+                url: '/info',
                 views: {
                     'menuContent': {
-                        templateUrl: "templates/patient.html",
-                        controller: 'PatientCtrl'
+                        templateUrl: "templates/info.html",
+                        controller: 'InfoCtrl'
                     }
                 },
                 params: {token: null}

@@ -1,6 +1,7 @@
 angular.module('starter.controllers', [])
 
-    .controller('AppCtrl', function ($scope, $ionicModal, $timeout) {
+    .controller('AppCtrl', function ($scope, $ionicModal, $timeout, TokenService) {
+        TokenService.setBase('http://dre.amida-demo.com:3000/');
         var isIOS = ionic.Platform.isIOS();
         if (isIOS) {
             $scope.enableHealthKit = true;
@@ -14,9 +15,9 @@ angular.module('starter.controllers', [])
         if (isIOS) {
             $cordovaHealthKit.isAvailable().then(function (yes) {
                 // HK is available
-                $scope.healthKitAvailable = "Health Kit IS Available : )";
+                $scope.healthKitAvailable = "HealthKit is available";
 
-                var permissions = ['HKQuantityTypeIdentifierHeight', 'HKQuantityTypeIdentifierStepCount', 'HKQuantityTypeIdentifierBodyMass'];
+                var permissions = ['HKQuantityTypeIdentifierHeight', 'HKQuantityTypeIdentifierBodyMass'];
 
                 $cordovaHealthKit.requestAuthorization(
                     permissions, // Read permission
@@ -34,26 +35,13 @@ angular.module('starter.controllers', [])
                             $scope.userHeightdate = v.date;
                         }, function (err) {
                         });
-
-                        var curDate = new Date();
-
-                        $cordovaHealthKit.querySampleType({
-                            startDate: new Date(curDate.getYear(), curDate.getMonth(), curDate.getDate(), 0, 0, 0),
-                            endDate: curDate,
-                            sampleType: 'HKQuantityTypeIdentifierStepCount',
-                            unit: 'count'
-                        }, function (v) {
-                            $scope.userSteps = JSON.stringify(v);
-                        }, function (err) {
-                            $scope.userSteps = err;
-                        })
                     }, function (err) {
                         $scope.granted = false;
                     });
 
             }, function (no) {
                 // No HK available
-                $scope.healthKitAvailable = "Health Kit is NOT Available : (";
+                $scope.healthKitAvailable = "HealthKit is NOT Available";
             });
         } else {
             $scope.healthKitAvailable = "Not on iOS / no HealthKit";
@@ -61,13 +49,12 @@ angular.module('starter.controllers', [])
     }])
 
     .controller('DevCtrl', ['$scope', 'TokenService', function ($scope, TokenService) {
-        $scope.base = {url: 'http://localhost:3000/'};
+        $scope.base = {url: 'http://dre.amida-demo.com:3000/'};
         TokenService.getBase(function (baseUrl) {
             $scope.base.url = baseUrl;
         });
 
         $scope.updateBase = function (newBase) {
-            console.log("controller baseUrl: " + newBase);
             TokenService.setBase(newBase);
         };
 
@@ -76,7 +63,7 @@ angular.module('starter.controllers', [])
         }
     }])
 
-    .controller('TokenCtrl', ['$scope', '$state', '$location', '$cordovaOauth', '$ionicHistory', 'TokenService', function ($scope, $state, $location, $cordovaOauth, $ionicHistory, TokenService) {
+    .controller('SettingsCtrl', ['$scope', '$state', '$location', '$cordovaOauth', '$ionicHistory', 'TokenService', function ($scope, $state, $location, $cordovaOauth, $ionicHistory, TokenService) {
         $ionicHistory.nextViewOptions({
             disableBack: true
         });
@@ -110,7 +97,7 @@ angular.module('starter.controllers', [])
         };
 
         $scope.goPatient = function () {
-            $state.go('app.patients', {
+            $state.go('app.info', {
                 token: $scope.token
             });
         };
@@ -125,7 +112,7 @@ angular.module('starter.controllers', [])
         }
     }])
 
-    .controller('PatientCtrl', ['$scope', '$location', '$stateParams', 'TokenService', function ($scope, $location, $stateParams, TokenService) {
+    .controller('InfoCtrl', ['$scope', '$location', '$stateParams', 'TokenService', function ($scope, $location, $stateParams, TokenService) {
 
         var c = {};
         var token = $stateParams.token;

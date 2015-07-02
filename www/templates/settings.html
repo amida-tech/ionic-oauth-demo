@@ -35,13 +35,20 @@
                     </div>
                 </div>
             </ion-item>
+            <ion-item ng-show="tokenExists">
+                <div class="row">
+                    <button class="button button-balanced col" ng-click="goMeds()">
+                        Go To Medications
+                    </button>
+                </div>
+            </ion-item>
         </ion-list>
     </ion-content>
     <div id="newUser" ng-hide="tokenExists">
-    <button class="button button-balanced col" ng-click="getToken()">Add a User (DRE)</button>
+        <button class="button button-balanced col" ng-click="getToken()">Connect to DRE</button>
 </div>
     <div id="newUser" ng-show="tokenExists">
-        <button class="button button-assertive col" ng-click="clearTokens()">Remove User</button>
+        <button class="button button-assertive col" ng-click="clearTokens()">Disconnect</button>
     </div>
 
 </ion-view>
