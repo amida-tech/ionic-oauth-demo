@@ -130,7 +130,7 @@ angular.module('starter.controllers', [])
         }
     }])
 
-    .controller('MedicationCtrl', ['$scope', '$state', '$ionicHistory', '$cordovaOauth', 'TokenService', function ($scope, $state, $ionicHistory, $cordovaOauth, TokenService) {
+    .controller('MedicationCtrl', ['$scope', '$state', '$location', '$ionicHistory', '$cordovaOauth', 'TokenService', function ($scope, $state, $location, $ionicHistory, $cordovaOauth, TokenService) {
         $ionicHistory.nextViewOptions({
             disableBack: true
         });
@@ -152,6 +152,10 @@ angular.module('starter.controllers', [])
                 }
             });
         }
+
+        $scope.goToSettings = function () {
+            $location.path('/app/settings');
+        };
 
         $scope.getToken = function () {
             var c = {};
