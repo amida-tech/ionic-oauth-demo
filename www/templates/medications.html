@@ -4,6 +4,14 @@
             <ion-item ng-hide="tokenExists">
                 No health records connected.
             </ion-item>
+            <div class="card" ng-show="tokenExists">
+                <div class="item item-text-wrap" ng-if="token.c.name === 'DRE/FHIR'">
+                    The medications listed here are from your health record stored in the Data Reconciliation Engine.
+                </div>
+                <div class="item item-text-wrap" ng-if="token.c.name === 'SMART on FHIR'">
+                    The medications listed here are from your health record stored on SMART on FHIR.
+                </div>
+            </div>
             <ion-item ng-repeat="(medIndex, med) in medications track by $index" ng-show="tokenExists">
                 {{med.name}}<!-- - {{med.resource.status}}-->
             </ion-item>
@@ -11,5 +19,8 @@
     </ion-content>
     <div id="newUser" ng-hide="tokenExists">
         <button class="button button-balanced col" ng-click="goToSettings()">Connect to your health record</button>
+    </div>
+    <div id="newUser" ng-show="tokenExists">
+        <button class="button button-stable col" ng-click="goToSettings()">Go To Settings</button>
     </div>
 </ion-view>

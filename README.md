@@ -29,7 +29,7 @@ bower install
 
 #### iOS
 
-DRE is currently setup for http NOT https... iOS doesn't like that (for good reason).  Currently a workaround until DRE adds https is to... go and modify your IonicApp-Info.plist file located at `platforms/ios/IonicApp/IonicApp-Info.plist` and add this to it:
+DRE is currently setup for http NOT https... iOS doesn't like that (for good reason).  Currently a workaround until DRE adds https is to... go and modify your IonicApp-Info.plist file located at `platforms/ios/Med List/Med List-Info.plist` and add this to it:
 
 ```
 <key>NSAppTransportSecurity</key>
@@ -39,7 +39,7 @@ DRE is currently setup for http NOT https... iOS doesn't like that (for good rea
     </dict>
 ```
 
-For HealthKit, add this file `platforms/ios/IonicApp/IonicApp.entitlements` :
+For HealthKit, add this file `platforms/ios/Med List/Med List.entitlements` :
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>

@@ -157,6 +157,11 @@ angular.module('starter.controllers', [])
             disableBack: true
         });
 
+        $scope.token = {};
+        TokenService.getToken(function (token) {
+            $scope.token = token;
+        });
+
         function getMedications(val) {
             var result = [];
             if (val && val.entry) {

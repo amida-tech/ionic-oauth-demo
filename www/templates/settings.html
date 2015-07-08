@@ -3,14 +3,14 @@
         <ion-list>
             <ion-item ng-hide="tokenExists">
                 <div class="row">
-                    <button class="button button-default col-50 token" ng-click="getDREToken()">
+                    <button class="button button-default col-75 token" ng-click="getDREToken()">
                         <!--<i class="icon ion-android-person"></i>-->
-                        [DRE]&nbsp;&nbsp;<i class="icon ion-chevron-right" style="float: right;"></i>
+                        <img class="bblogo" src="img/bb-logo-vector.png"/> DRE
                     </button>
                     <!--                    <div class="col-25">
 
                                         </div>-->
-                    <div class="col-50">
+                    <div class="col-25">
                         <button class="button infoButton" ng-click="getDREToken()">
                             Connect
                         </button>
@@ -19,14 +19,14 @@
             </ion-item>
             <ion-item ng-hide="tokenExists">
                 <div class="row">
-                    <button class="button button-default col-50 token" ng-click="getSMARTToken()">
+                    <button class="button button-default col-75 token" ng-click="getSMARTToken()">
                         <!--<i class="icon ion-android-person"></i>-->
-                        [SMART]&nbsp;&nbsp;<i class="icon ion-chevron-right" style="float: right;"></i>
+                        <img class="smartlogo" src="img/smart_logo.png"/> SMART on FHIR
                     </button>
                     <!--                    <div class="col-25">
 
                                         </div>-->
-                    <div class="col-50">
+                    <div class="col-25">
                         <button class="button infoButton" ng-click="getSMARTToken()">
                             Connect
                         </button>
@@ -35,28 +35,30 @@
             </ion-item>
             <ion-item ng-show="tokenExists">
                 <div class="row">
-                    <button class="button button-default col-75 token" ng-click="goMeds()"
+                    <button class="button button-default col token" ng-click="goMeds()"
                             ng-if="token.c.name === 'DRE/FHIR'">
                     <!--<i class="icon ion-android-person"></i>-->
-                        [DRE] {{token.patients[0].resource.name[0].given[0]}}
+                        <img class="bblogo" src="img/bb-logo-vector.png"/>
+                        {{token.patients[0].resource.name[0].given[0]}}
                         {{token.patients[0].resource.name[0].family[0]}}&nbsp;&nbsp;<i class="icon ion-chevron-right"
                                                                                        style="float: right;"></i>
                     </button>
-                    <button class="button button-default col-75 token" ng-click="goMeds()"
+                    <button class="button button-default col token" ng-click="goMeds()"
                             ng-if="token.c.name === 'SMART on FHIR'">
                         <!--<i class="icon ion-android-person"></i>-->
-                        [SMART] {{token.patients[0].resource.name[0].given[0]}}
+                        <img class="smartlogo" src="img/smart_logo.png"/>
+                        {{token.patients[0].resource.name[0].given[0]}}
                         {{token.patients[0].resource.name[0].family[0]}}&nbsp;&nbsp;<i class="icon ion-chevron-right"
                                                                                        style="float: right;"></i>
                     </button>
 <!--                    <div class="col-25">
 
                     </div>-->
-                    <div class="col-25">
+                    <!--<div class="col-25">
                         <button class="button infoButton" ng-click="goPatient()">
                             INFO
                         </button>
-                    </div>
+                    </div>-->
                 </div>
             </ion-item>
             <div class="card" ng-show="tokenExists">
