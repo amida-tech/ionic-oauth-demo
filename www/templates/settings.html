@@ -3,7 +3,7 @@
         <ion-list>
             <ion-item ng-hide="tokenExists">
                 <div class="row">
-                    <button class="button button-default col-50 token" ng-click="getToken()">
+                    <button class="button button-default col-50 token" ng-click="getDREToken()">
                         <!--<i class="icon ion-android-person"></i>-->
                         [DRE]&nbsp;&nbsp;<i class="icon ion-chevron-right" style="float: right;"></i>
                     </button>
@@ -11,7 +11,23 @@
 
                                         </div>-->
                     <div class="col-50">
-                        <button class="button infoButton" ng-click="getToken()">
+                        <button class="button infoButton" ng-click="getDREToken()">
+                            Connect
+                        </button>
+                    </div>
+                </div>
+            </ion-item>
+            <ion-item ng-hide="tokenExists">
+                <div class="row">
+                    <button class="button button-default col-50 token" ng-click="getSMARTToken()">
+                        <!--<i class="icon ion-android-person"></i>-->
+                        [SMART]&nbsp;&nbsp;<i class="icon ion-chevron-right" style="float: right;"></i>
+                    </button>
+                    <!--                    <div class="col-25">
+
+                                        </div>-->
+                    <div class="col-50">
+                        <button class="button infoButton" ng-click="getSMARTToken()">
                             Connect
                         </button>
                     </div>
@@ -44,9 +60,6 @@
             </ion-item>
         </ion-list>
     </ion-content>
-    <div id="newUser" ng-hide="tokenExists">
-        <button class="button button-balanced col" ng-click="getToken()">Connect to DRE</button>
-</div>
     <div id="newUser" ng-show="tokenExists">
         <button class="button button-assertive col" ng-click="clearTokens()">Disconnect</button>
     </div>

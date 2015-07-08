@@ -23,7 +23,7 @@ angular.module('starter.services', [])
         }
 
         this.setToken = setToken;
-
+        /*
         function getBase(callback) {
             var baseUrl = $localstorage.get('baseUrl', 'http://dre.amida-demo.com:3000/');
             callback(baseUrl);
@@ -36,7 +36,7 @@ angular.module('starter.services', [])
         }
 
         this.setBase = setBase;
-
+         */
         function setTokens(tokens) {
             var userTokens = {tokens: tokens};
             $localstorage.setObject('userTokens', userTokens);
@@ -63,39 +63,56 @@ angular.module('starter.services', [])
 
         this.tokenExists = tokenExists;
 
-        function getCredentials(callback) {
-            getBase(function (baseUrl) {
-                c = {
-                    name: 'DRE/FHIR (' + baseUrl + ')',
-                    url: baseUrl,
-                    //url: 'http://192.168.0.120:3000/',
-                    auth_url: baseUrl,
-                    //auth_url: 'http://192.168.0.120:3000/',
-                    logo_url: '',
-                    credentials: {
-                        client_id: 'argonaut_demo_client_local',
-                        client_secret: 'have no secrets!',
-                        site: baseUrl,
-                        //site: 'http://192.168.0.120:3000/',
-                        api_url: baseUrl + 'fhir',
-                        //api_url: 'http://192.168.0.120:3000/fhir',
-                        authorization_path: 'oauth2/authorize',
-                        token_path: 'oauth2/token',
-                        revocation_path: 'oauth2/revoke',
-                        scope: '',
-                        //redirect_uri: 'http://localhost:3001/fhir/callback'
-                        redirect_uri: 'http://localhost/callback'
-                    }
-                };
-                callback(c);
-            })
+        function getDRECredentials(callback) {
+            var c = {
+                name: 'DRE/FHIR',
+                url: 'http://dre.amida-demo.com:3000/',
+                auth_url: 'http://dre.amida-demo.com:3000/',
+                logo_url: '',
+                credentials: {
+                    client_id: 'argonaut_demo_client_local',
+                    client_secret: 'have no secrets!',
+                    site: 'http://dre.amida-demo.com:3000/',
+                    api_url: 'http://dre.amida-demo.com:3000/fhir',
+                    authorization_path: 'oauth2/authorize',
+                    token_path: 'oauth2/token',
+                    revocation_path: 'oauth2/revoke',
+                    scope: '',
+                    redirect_uri: 'http://localhost/callback'
+                }
+            };
+            callback(c);
         }
-        this.getCredentials = getCredentials;
 
-        function getPatients(c, token, callback) {
+        this.getDRECredentials = getDRECredentials;
+
+        function getSMARTCredentials(callback) {
+            var c = {
+                name: 'SMART on FHIR',
+                url: 'https://fhir-api.smarthealthit.org/',
+                auth_url: 'https://authorize.smarthealthit.org/',
+                logo_url: '',
+                credentials: {
+                    client_id: '89032ea9-ca63-45fc-a4a9-c41e5d0a5fe4',
+                    client_secret: 'ALsLobPCcQFrDCwzJ-eC_puhIPTFeEP6eSz6cj07DNSvWN9mM2nCmxW4hlxwOu9xB8s92BeCbx_eh9nRvZ3lioQ',
+                    site: 'https://authorize.smarthealthit.org/',
+                    api_url: 'https://fhir-api.smarthealthit.org/',
+                    authorization_path: '/authorize',
+                    token_path: '/token',
+                    revocation_path: '/revoke',
+                    scope: '',
+                    redirect_uri: 'http://localhost/callback'
+                }
+            };
+            callback(c);
+        }
+
+        this.getSMARTCredentials = getSMARTCredentials;
+
+        function getPatients(token, callback) {
             $http({
                 method: "get",
-                url: c.credentials.api_url + '/Patient',
+                url: token.c.credentials.api_url + '/Patient',
                 headers: {
                     Authorization: 'Bearer ' + token.access_token,
                     Accept: 'application/json'
@@ -111,10 +128,10 @@ angular.module('starter.services', [])
 
         this.getPatients = getPatients;
 
-        function getMedications(c, token, patient, callback) {
+        function getMedications(token, patient, callback) {
             $http({
                 method: "get",
-                url: c.credentials.api_url + '/MedicationPrescription?patient=' + patient,
+                url: token.c.credentials.api_url + '/MedicationPrescription?patient=' + patient,
                 headers: {
                     Authorization: 'Bearer ' + token.access_token,
                     Accept: 'application/json'
@@ -132,22 +149,20 @@ angular.module('starter.services', [])
 
         function getUserMedications(callback) {
             getToken(function (token) {
-                getCredentials(function (c) {
-                    $http({
-                        method: "get",
-                        url: c.credentials.api_url + '/MedicationPrescription?patient=' + token.patients[0].resource.id,
-                        headers: {
-                            Authorization: 'Bearer ' + token.access_token,
-                            Accept: 'application/json'
-                        }
+                $http({
+                    method: "get",
+                    url: token.c.credentials.api_url + '/MedicationPrescription?patient=' + token.patients[0].resource.id,
+                    headers: {
+                        Authorization: 'Bearer ' + token.access_token,
+                        Accept: 'application/json'
+                    }
+                })
+                    .success(function (data) {
+                        callback(data);
                     })
-                        .success(function (data) {
-                            callback(data);
-                        })
-                        .error(function (data, status) {
-                            callback(status);
-                        })
-                });
+                    .error(function (data, status) {
+                        callback(status);
+                    })
             });
         }
 

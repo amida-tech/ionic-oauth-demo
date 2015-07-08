@@ -1,7 +1,7 @@
 angular.module('starter.controllers', [])
 
     .controller('AppCtrl', function ($scope, $ionicModal, $timeout, TokenService) {
-        TokenService.setBase('http://dre.amida-demo.com:3000/');
+        //TokenService.setBase('http://dre.amida-demo.com:3000/');
         var isIOS = ionic.Platform.isIOS();
         if (isIOS) {
             $scope.enableHealthKit = true;
@@ -77,14 +77,34 @@ angular.module('starter.controllers', [])
         $scope.tokenExists = TokenService.tokenExists();
 
         var c = {};
-        TokenService.getCredentials(function (credentials) {
-            c = credentials;
-        });
 
-        $scope.getToken = function () {
+        $scope.getDREToken = function () {
+            TokenService.getDRECredentials(function (credentials) {
+                c = credentials;
+            });
             $cordovaOauth.dre(c).then(function (result) {
                 $scope.oauthSuccess = "success " + JSON.stringify(result);
-                TokenService.getPatients(c, result, function (response) {
+                result.c = c;
+                TokenService.getPatients(result, function (response) {
+                    result.patients = response.entry;
+                    $scope.token = result;
+                    TokenService.setToken(result);
+                    $scope.tokenExists = true;
+                });
+            }, function (error) {
+                console.log("error: " + error);
+                $scope.oauthError = "error " + error;
+            });
+        };
+
+        $scope.getSMARTToken = function () {
+            TokenService.getSMARTCredentials(function (credentials) {
+                c = credentials;
+            });
+            $cordovaOauth.smart(c).then(function (result) {
+                $scope.oauthSuccess = "success " + JSON.stringify(result);
+                result.c = c;
+                TokenService.getPatients(result, function (response) {
                     result.patients = response.entry;
                     $scope.token = result;
                     TokenService.setToken(result);
@@ -114,15 +134,11 @@ angular.module('starter.controllers', [])
 
     .controller('InfoCtrl', ['$scope', '$location', '$stateParams', 'TokenService', function ($scope, $location, $stateParams, TokenService) {
 
-        var c = {};
         var token = $stateParams.token;
         $scope.token = token;
         $scope.patients = [];
-        TokenService.getCredentials(function (credentials) {
-            c = credentials;
-            TokenService.getPatients(c, token, function (response) {
-                $scope.patients = response.entry;
-            });
+        TokenService.getPatients(token, function (response) {
+            $scope.patients = response.entry;
         });
 
         $scope.goMeds = function (patientIndex) {
@@ -157,14 +173,16 @@ angular.module('starter.controllers', [])
             $location.path('/app/settings');
         };
 
-        $scope.getToken = function () {
-            var c = {};
-            TokenService.getCredentials(function (credentials) {
+        var c = {};
+
+        $scope.getSMARTToken = function () {
+            TokenService.getSMARTCredentials(function (credentials) {
                 c = credentials;
             });
-            $cordovaOauth.dre(c).then(function (result) {
+            $cordovaOauth.smart(c).then(function (result) {
                 $scope.oauthSuccess = "success " + JSON.stringify(result);
-                TokenService.getPatients(c, result, function (response) {
+                result.c = c;
+                TokenService.getPatients(result, function (response) {
                     result.patients = response.entry;
                     $scope.token = result;
                     TokenService.setToken(result);
@@ -187,5 +205,37 @@ angular.module('starter.controllers', [])
                 console.log("error: " + error);
                 $scope.oauthError = "error " + error;
             });
-        }
+        };
+
+        $scope.getDREToken = function () {
+            TokenService.getDRECredentials(function (credentials) {
+                c = credentials;
+            });
+            $cordovaOauth.dre(c).then(function (result) {
+                $scope.oauthSuccess = "success " + JSON.stringify(result);
+                result.c = c;
+                TokenService.getPatients(result, function (response) {
+                    result.patients = response.entry;
+                    $scope.token = result;
+                    TokenService.setToken(result);
+                    $scope.tokenExists = true;
+                    TokenService.getUserMedications(function (response) {
+                        var meds = response.entry;
+                        var medPush = [];
+                        for (var i = 0; i <= meds.length; i++) {
+                            if (i === meds.length) {
+                                $scope.medications = medPush;
+                            } else {
+                                if (meds[i].resource.resourceType === 'MedicationPrescription') {
+                                    medPush.push(meds[i]);
+                                }
+                            }
+                        }
+                    });
+                });
+            }, function (error) {
+                console.log("error: " + error);
+                $scope.oauthError = "error " + error;
+            });
+        };
     }]);

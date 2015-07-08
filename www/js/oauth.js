@@ -65,6 +65,68 @@ angular.module("oauth.providers", ["oauth.utils"])
                     deferred.reject("Cannot authenticate via a web browser");
                 }
                 return deferred.promise;
+            },
+            /*
+             * Sign into the SMART on FHIR service
+             *
+             * @param    object credentials
+             * @return   promise
+             */
+            smart: function (c) {
+                var deferred = $q.defer();
+                if (window.cordova) {
+                    var cordovaMetadata = cordova.require("cordova/plugin_list").metadata;
+                    if ($cordovaOauthUtility.isInAppBrowserInstalled(cordovaMetadata) === true) {
+                        var redirect_uri = "http://localhost/callback";
+
+                        var browserRef = window.open(c.auth_url + c.credentials.authorization_path + '?client_id=' + c.credentials.client_id + '&redirect_uri=' + redirect_uri + '&response_type=code', '_blank', 'location=no,clearsessioncache=yes,clearcache=yes');
+                        browserRef.addEventListener('loadstart', function (event) {
+                            console.log("loadstart: " + event.url);
+                            if ((event.url).indexOf("http://localhost/callback") === 0) {
+                                requestToken = (event.url).split("code=")[1];
+                                console.log("code: " + requestToken);
+                                $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+                                $http({
+                                    method: "post",
+                                    url: c.auth_url + c.credentials.token_path,
+                                    auth: {
+                                        user: c.credentials.client_id,
+                                        pass: c.credentials.client_secret,
+                                        sendImmediately: true
+                                    },
+                                    data: "client_id=" + c.credentials.client_id + "&client_secret=" + c.credentials.client_secret + "&redirect_uri=" + redirect_uri + "&grant_type=authorization_code" + "&code=" + requestToken,
+                                    form: {
+                                        code: requestToken,
+                                        redirect_uri: redirect_uri,
+                                        client_id: c.credentials.client_id,
+                                        client_secret: c.credentials.client_secret,
+                                        grant_type: 'authorization_code'
+                                    }
+                                })
+                                    .success(function (data) {
+                                        deferred.resolve(data);
+                                    })
+                                    .error(function (data, status) {
+                                        deferred.reject("Problem authenticating");
+                                    })
+                                    .finally(function () {
+                                        setTimeout(function () {
+                                            browserRef.close();
+                                        }, 10);
+                                    });
+                            }
+                        });
+                        browserRef.addEventListener('exit', function (event) {
+                            console.log("here in exit");
+                            deferred.reject("The sign in flow was canceled");
+                        });
+                    } else {
+                        deferred.reject("Could not find InAppBrowser plugin");
+                    }
+                } else {
+                    deferred.reject("Cannot authenticate via a web browser");
+                }
+                return deferred.promise;
             }
 
         };
