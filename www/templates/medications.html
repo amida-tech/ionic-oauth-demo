@@ -5,7 +5,7 @@
                 No health records connected.
             </ion-item>
             <ion-item ng-repeat="(medIndex, med) in medications track by $index" ng-show="tokenExists">
-                {{med.resource.medication.display}}<!-- - {{med.resource.status}}-->
+                {{med.name}}<!-- - {{med.resource.status}}-->
             </ion-item>
         </ion-list>
     </ion-content>

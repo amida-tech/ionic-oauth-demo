@@ -149,18 +149,25 @@ angular.module('starter.services', [])
 
         function getUserMedications(callback) {
             getToken(function (token) {
+                var medUrl = token.c.credentials.api_url + '/MedicationPrescription?patient=' + token.patients[0].resource.id;
+                if (token.c.name === 'SMART on FHIR') {
+                    // /MedicationPrescription/_search?patient%3APatient=1288992'
+                    medUrl = token.c.credentials.api_url + 'MedicationPrescription/_search?patient%3APatient=1288992';
+                }
                 $http({
                     method: "get",
-                    url: token.c.credentials.api_url + '/MedicationPrescription?patient=' + token.patients[0].resource.id,
+                    url: medUrl,
                     headers: {
                         Authorization: 'Bearer ' + token.access_token,
                         Accept: 'application/json'
                     }
                 })
                     .success(function (data) {
+                        console.log("was successful connection to meds: " + JSON.stringify(data));
                         callback(data);
                     })
                     .error(function (data, status) {
+                        console.log("error connecting to meds");
                         callback(status);
                     })
             });

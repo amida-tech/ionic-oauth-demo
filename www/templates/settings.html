@@ -35,9 +35,17 @@
             </ion-item>
             <ion-item ng-show="tokenExists">
                 <div class="row">
-                    <button class="button button-default col-75 token" ng-click="goMeds()">
+                    <button class="button button-default col-75 token" ng-click="goMeds()"
+                            ng-if="token.c.name === 'DRE/FHIR'">
                     <!--<i class="icon ion-android-person"></i>-->
                         [DRE] {{token.patients[0].resource.name[0].given[0]}}
+                        {{token.patients[0].resource.name[0].family[0]}}&nbsp;&nbsp;<i class="icon ion-chevron-right"
+                                                                                       style="float: right;"></i>
+                    </button>
+                    <button class="button button-default col-75 token" ng-click="goMeds()"
+                            ng-if="token.c.name === 'SMART on FHIR'">
+                        <!--<i class="icon ion-android-person"></i>-->
+                        [SMART] {{token.patients[0].resource.name[0].given[0]}}
                         {{token.patients[0].resource.name[0].family[0]}}&nbsp;&nbsp;<i class="icon ion-chevron-right"
                                                                                        style="float: right;"></i>
                     </button>
@@ -51,6 +59,16 @@
                     </div>
                 </div>
             </ion-item>
+            <div class="card" ng-show="tokenExists">
+                <div class="item item-text-wrap">
+                    For this demo, you can only connect to one health record at a time.
+                </div>
+            </div>
+            <!--<ion-item ng-show="tokenExists">
+                <div class="card">
+                    For this demo, you can only connect to one health record at a time.
+                </div>
+            </ion-item>-->
             <ion-item ng-show="tokenExists">
                 <div class="row">
                     <button class="button button-balanced col" ng-click="goMeds()">
