@@ -61,6 +61,11 @@
                     </div>-->
                 </div>
             </ion-item>
+            <div class="card" ng-show="oauthError">
+                <div class="item item-text-wrap">
+                    There was a problem authenticating, please try again.
+                </div>
+            </div>
             <div class="card" ng-show="tokenExists">
                 <div class="item item-text-wrap">
                     For this demo, you can only connect to one health record at a time.

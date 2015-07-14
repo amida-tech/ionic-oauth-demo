@@ -86,6 +86,38 @@ angular.module('starter.services', [])
 
         this.getDRECredentials = getDRECredentials;
 
+        function getTokenResult(c, requestToken, callback) {
+            var redirect_uri = "http://localhost/callback";
+            $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+            $http({
+                method: "post",
+                url: c.auth_url + c.credentials.token_path,
+                auth: {
+                    user: c.credentials.client_id,
+                    pass: c.credentials.client_secret,
+                    sendImmediately: true
+                },
+                data: "client_id=" + c.credentials.client_id + "&client_secret=" + c.credentials.client_secret + "&redirect_uri=" + redirect_uri + "&grant_type=authorization_code" + "&code=" + requestToken,
+                form: {
+                    code: requestToken,
+                    redirect_uri: redirect_uri,
+                    client_id: c.credentials.client_id,
+                    client_secret: c.credentials.client_secret,
+                    grant_type: 'authorization_code'
+                }
+            })
+                .success(function (data) {
+                    console.log("getDREResult: " + data);
+                    callback(null, data);
+                })
+                .error(function (data, status) {
+                    console.log("getDREResult error: " + data);
+                    callback("Problem Authenticating");
+                })
+        }
+
+        this.getTokenResult = getTokenResult;
+
         function getSMARTCredentials(callback) {
             var c = {
                 name: 'SMART on FHIR',
@@ -167,7 +199,7 @@ angular.module('starter.services', [])
                         callback(data);
                     })
                     .error(function (data, status) {
-                        console.log("error connecting to meds");
+                        console.log("error connecting to meds: " + data + " - " + status);
                         callback(status);
                     })
             });

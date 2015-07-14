@@ -64,6 +64,7 @@ angular.module('starter.controllers', [])
     }])
 
     .controller('SettingsCtrl', ['$scope', '$state', '$location', '$cordovaOauth', '$ionicHistory', 'TokenService', function ($scope, $state, $location, $cordovaOauth, $ionicHistory, TokenService) {
+        $scope.oauthError = "";
         $ionicHistory.nextViewOptions({
             disableBack: true
         });
@@ -79,43 +80,51 @@ angular.module('starter.controllers', [])
         var c = {};
 
         $scope.getDREToken = function () {
+            $scope.oauthError = "";
             TokenService.getDRECredentials(function (credentials) {
                 c = credentials;
             });
-            $cordovaOauth.dre(c).then(function (result) {
-                $scope.oauthSuccess = "success " + JSON.stringify(result);
-                result.c = c;
-                TokenService.getPatients(result, function (response) {
-                    result.patients = response.entry;
-                    $scope.token = result;
-                    TokenService.setToken(result);
-                    $scope.tokenExists = true;
-                });
+            $cordovaOauth.dre(c).then(function (requestToken) {
+                TokenService.getTokenResult(c, requestToken, function (err, result) {
+                    if (err) {
+                        console.log("error: " + err);
+                        $scope.oauthError = "error: " + err;
+                    } else {
+                        $scope.oauthSuccess = "success " + JSON.stringify(result);
+                        result.c = c;
+                        TokenService.getPatients(result, function (response) {
+                            result.patients = response.entry;
+                            $scope.token = result;
+                            TokenService.setToken(result);
+                            $scope.tokenExists = true;
+                        });
+                    }
+                })
             }, function (error) {
                 console.log("error: " + error);
-                $scope.oauthError = "error " + error;
+                $scope.oauthError = "error: " + error;
             });
         };
 
         $scope.getSMARTToken = function () {
+            $scope.oauthError = "";
             TokenService.getSMARTCredentials(function (credentials) {
                 c = credentials;
             });
             $cordovaOauth.smart(c).then(function (result) {
-                $scope.oauthSuccess = "success " + JSON.stringify(result);
-                result.c = c;
-                /*
-                TokenService.getPatients(result, function (response) {
-                    result.patients = response.entry;
-                    $scope.token = result;
-                    TokenService.setToken(result);
-                    $scope.tokenExists = true;
-                });
-                 */
-                result.patients = [{resource: {name: [{given: ['Daniel'], family: ['Adams']}]}}];
-                $scope.token = result;
-                TokenService.setToken(result);
-                $scope.tokenExists = true;
+                TokenService.getTokenResult(c, requestToken, function (err, result) {
+                    if (err) {
+                        console.log("error: " + err);
+                        $scope.oauthError = "error: " + err;
+                    } else {
+                        $scope.oauthSuccess = "success " + JSON.stringify(result);
+                        result.c = c;
+                        result.patients = [{resource: {name: [{given: ['Daniel'], family: ['Adams']}]}}];
+                        $scope.token = result;
+                        TokenService.setToken(result);
+                        $scope.tokenExists = true;
+                    }
+                })
             }, function (error) {
                 console.log("error: " + error);
                 $scope.oauthError = "error " + error;
@@ -133,6 +142,7 @@ angular.module('starter.controllers', [])
         };
 
         $scope.clearTokens = function () {
+            $scope.oauthError = "";
             TokenService.clearTokens();
             $scope.tokenExists = false;
         }

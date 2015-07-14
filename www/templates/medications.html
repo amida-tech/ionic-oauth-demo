@@ -12,7 +12,8 @@
                     The medications listed here are from your health record stored on SMART on FHIR.
                 </div>
             </div>
-            <ion-item ng-repeat="(medIndex, med) in medications track by $index" ng-show="tokenExists">
+            <ion-item class="item item-text-wrap" ng-repeat="(medIndex, med) in medications track by $index"
+                      ng-show="tokenExists">
                 {{med.name}}<!-- - {{med.resource.status}}-->
             </ion-item>
         </ion-list>
