@@ -196,9 +196,11 @@ angular.module('starter.controllers', [])
         }
 
         $scope.tokenExists = TokenService.tokenExists();
+        console.log("token exists: " + $scope.tokenExists);
 
         if ($scope.tokenExists) {
             TokenService.getUserMedications(function (response) {
+                console.log("get user meds response: " + response);
                 $scope.medications = getMedications(response);
                 /*
                 var meds = response.entry;
